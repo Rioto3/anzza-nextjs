@@ -68,7 +68,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 /**
  * Actually render the page!
  */
-export default function CatchallPage(props: { plasmicData?: ComponentRenderData; queryCache?: Record<string, any> }) {
+export default function CatchallPage(props: { plasmicData?: ComponentRenderData; queryCache?: Record<string, unknown> }) {
   const { plasmicData, queryCache } = props;
   const router = useRouter();
   if (!plasmicData || plasmicData.entryCompMetas.length === 0) {
