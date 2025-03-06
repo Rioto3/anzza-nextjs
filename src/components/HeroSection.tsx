@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-const video_load_time = 1800;
-const final_image_load_time = 5000;
+// 標準のvideoタグに戻す
+const VIDEO_LOAD_TIME = 1800;
+const FINAL_IMAGE_LOAD_TIME = 5000;
 
 interface HeroSectionProps {
   initialImage: string;
@@ -13,48 +14,32 @@ interface HeroSectionProps {
 }
 
 
-
 export function HeroSection({ initialImage, videoSrc, finalImage, className }: HeroSectionProps) {
   const [initialImageLoaded, setInitialImageLoaded] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [finalImageLoaded, setFinalImageLoaded] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [showFinalImage, setShowFinalImage] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = React.useRef<HTMLVideoElement>(null);
 
-
-  useEffect(() => {
-    if (initialImageLoaded && videoRef.current) {
-      videoRef.current.load();
-    }
-  }, [initialImageLoaded]);
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || '';
+  const fullVideoUrl = `https://res.cloudinary.com/${cloudName}/video/upload/${videoSrc}.mp4`;
 
   useEffect(() => {
-    if (initialImageLoaded && videoLoaded) {
+    if (initialImageLoaded) {
       const videoTimer = setTimeout(() => {
         setShowVideo(true);
         if (videoRef.current) {
           videoRef.current.play().catch(err => console.error('動画再生エラー:', err));
         }
-      }, video_load_time);
-
+      }, VIDEO_LOAD_TIME);
+      
       return () => clearTimeout(videoTimer);
     }
-  }, [initialImageLoaded, videoLoaded]);
+  }, [initialImageLoaded]);
 
   const handleVideoEnd = () => {
-    if (finalImageLoaded) {
+    setTimeout(() => {
       setShowFinalImage(true);
-    } else {
-      const checkLoaded = setInterval(() => {
-        if (finalImageLoaded) {
-          setShowFinalImage(true);
-          clearInterval(checkLoaded);
-        }
-      },final_image_load_time);
-      
-      setTimeout(() => clearInterval(checkLoaded), video_load_time);
-    }
+    }, FINAL_IMAGE_LOAD_TIME);
   };
 
   return (
@@ -92,16 +77,16 @@ export function HeroSection({ initialImage, videoSrc, finalImage, className }: H
           opacity: showVideo ? 1 : 0,
           transition: 'opacity 3s ease',
           zIndex: 1
+         
         }}
       >
         <video
           ref={videoRef}
-          src={videoSrc}
+          src={fullVideoUrl}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           muted
           playsInline
           preload="auto"
-          onLoadedData={() => setVideoLoaded(true)}
           onEnded={handleVideoEnd}
         />
       </div>
@@ -124,7 +109,6 @@ export function HeroSection({ initialImage, videoSrc, finalImage, className }: H
           fill
           sizes="100vw"
           style={{ objectFit: 'cover' }}
-          onLoadingComplete={() => setFinalImageLoaded(true)}
         />
       </div>
     </div>

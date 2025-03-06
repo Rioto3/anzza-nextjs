@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -9,6 +8,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.ctfassets.net',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
       },
     ],
     minimumCacheTTL: 60,
