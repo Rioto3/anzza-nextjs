@@ -1,5 +1,6 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 import { HelloWorld } from '@/components/HelloWorld';
+import { HeroSection } from '@/components/HeroSection';
 
 
 export const PLASMIC = initPlasmicLoader({
@@ -21,4 +22,13 @@ PLASMIC.registerComponent(HelloWorld, {
     verbose: 'boolean',
     children: 'slot'
   }
+});
+
+PLASMIC.registerComponent(HeroSection, {
+  name: 'HeroSection',
+  props: {
+    initialImage: 'string',
+    videoSrc: 'string',
+    finalImage: 'string'
+  },
 });
