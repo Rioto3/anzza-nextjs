@@ -80,6 +80,7 @@ export function HeroSection({
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           muted
           onEnded={handleVideoEnd}
+          autoPlay
         />
       </div>
 
