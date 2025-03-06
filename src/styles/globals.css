@@ -24,3 +24,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.next-video-container {
+  aspect-ratio: unset !important;
+  height: 100% !important;
+}
+
+[data-next-video] {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}

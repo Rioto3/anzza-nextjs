@@ -68,36 +68,55 @@ export function HeroSection({
           onLoadingComplete={() => setInitialImageLoaded(true)}
         />
       </div>
-      
+
+
+
+
       <div style={{
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  opacity: showVideo ? 1 : 0,
+  transition: 'opacity 3s ease',
+  overflow: 'hidden'
+}}>
+  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+    <style jsx>{`
+      .next-video-container {
+        aspect-ratio: unset !important;
+      }
+      
+      [data-next-video] {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+    `}</style>
+    <Video
+      src={fullVideoUrl}
+      style={{
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        opacity: showVideo ? 1 : 0,
-        transition: 'opacity 3s ease',
-        overflow: 'hidden'
-      }}>
-        <Video
-          src={fullVideoUrl}
-          style={{ 
-            width: 'auto',
-            height: '100%',
-            minWidth: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)'
-          }}
-          muted
-          onEnded={handleVideoEnd}
-          autoPlay
-          controls={false}
-          playsInline
-        />
-      </div>
+        objectFit: 'cover',
+      }}
+      muted
+      onEnded={handleVideoEnd}
+      autoPlay
+      controls={false}
+      playsInline
+    />
+  </div>
+</div>
+
+
+
+
+
       
       <div style={{
         position: 'absolute',
