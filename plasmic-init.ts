@@ -1,4 +1,7 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
+import { HelloWorld } from '@/components/HelloWorld';
+
+
 export const PLASMIC = initPlasmicLoader({
   projects: [
     {
@@ -11,3 +14,11 @@ export const PLASMIC = initPlasmicLoader({
   preview: true,
 })
 
+
+PLASMIC.registerComponent(HelloWorld, {
+  name: 'HelloWorld',
+  props: {
+    verbose: 'boolean',
+    children: 'slot'
+  }
+});
