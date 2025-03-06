@@ -66,14 +66,8 @@ export function HeroSection({
       </div>
 
       <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
         opacity: showVideo ? 1 : 0,
         transition: 'opacity 3s ease',
-        zIndex: 1
       }}>
         <Video
           src={fullVideoUrl}
@@ -81,6 +75,8 @@ export function HeroSection({
           muted
           onEnded={handleVideoEnd}
           autoPlay
+          controls={false}
+          playsInline
         />
       </div>
 
